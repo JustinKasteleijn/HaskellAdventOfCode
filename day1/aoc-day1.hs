@@ -5,12 +5,7 @@ solve_part_one rows = let
        l1 = sort (map head rows)
        l2 = sort (map (!! 1) rows)
        in foldr (\(a, b) acc -> abs(b - a) + acc) 0 (zip l1 l2)
-       
-solve_part_one_with_columns rows = let 
-       columns = transpose rows
-       l1 = sort (map head rows)
-       l2 = sort (map (!! 1) rows)
-       in foldr (\(a, b) acc -> abs(b - a) + acc) 0 (zip l1 l2)
+
        
 solve_part_two :: [[Integer]] -> Integer
 solve_part_two rows = let 
