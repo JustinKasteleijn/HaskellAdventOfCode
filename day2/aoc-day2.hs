@@ -16,9 +16,27 @@ isSafe levels =
 solve :: [[Integer]] -> Int
 solve = length . filter (==Safe) . map isSafe
 
+
+isSafeRecursive :: [Integer] -> Integer -> RecordType
+isSafeRecursive levels skip = case isSafe (removeAt skip levels) of 
+                                   Safe -> Safe
+                                   Unsafe -> if skip >= fromIntegral (length levels)
+                                             then Unsafe
+                                             else isSafeRecursive levels (skip +1)
+
+ 
+removeAt :: Integer -> [Integer] -> [Integer]
+removeAt n l = case (n, l) of 
+                    (_, [])     -> []
+                    (0, _)      -> tail l
+                    (n, (x:xs)) -> x : (removeAt (n-1) xs)
+                    
+solve2 :: [[Integer]]  -> Int
+solve2 xs = (length . filter (==Safe) . map (\i -> isSafeRecursive i 0)) xs
+
 main :: IO ()
 main = do
   input <- readFile "input.txt" 
   let rows :: [[Integer]] 
       rows = map (map read . words) (lines input)
-  print (solve rows)
+  print (solve2 rows)
