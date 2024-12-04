@@ -18,7 +18,7 @@ solve = length . filter (==Safe) . map isSafe
 
 
 isSafeRecursive :: [Integer] -> Integer -> RecordType
-isSafeRecursive levels skip = case isSafe (removeAt skip levels) of 
+isSafeRecursive levels skip = case isSafe (removeAt 0 levels) of 
                                    Safe -> Safe
                                    Unsafe -> if skip >= fromIntegral (length levels)
                                              then Unsafe
