@@ -1,5 +1,21 @@
 import Data.List
 
+data Blood = A | B | AB | O
+  deriving(Show, Eq)
+
+instance Ord Blood where 
+  compare A  A  = EQ
+  compare A  _  = LT
+  compare B  B  = EQ
+  compare B  A  = GT
+  compare B  _  = LT
+  compare AB AB = EQ
+  compare AB A  = GT
+  compare AB B  = GT
+  compare AB O  = LT
+  compare O  O  = EQ
+  compare O  _  = GT
+  
 solve_part_one :: [[Integer]] -> Integer
 solve_part_one rows = let 
        l1 = sort (map head rows)
@@ -23,7 +39,9 @@ solve_part_two rows = let
 
 main :: IO ()
 main = do
-  input <- readFile "input.txt" 
-  let parseLine = map read . words
-  let rows = (map parseLine . lines) input
-  print (solve_part_two rows)
+  --input <- readFile "input.txt" 
+  --let parseLine = map read . words
+  --let rows = (map parseLine . lines) input
+  --print (solve_part_two rows)
+  let l = [(AB, O), (A, A), (A, B)]
+  print (sortOn (snd) l)
